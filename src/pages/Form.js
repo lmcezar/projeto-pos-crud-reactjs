@@ -7,7 +7,7 @@ import axios from "axios";
 
 const url = "https://node-todo-dev.herokuapp.com/api/todos";
 
-export default () => {
+export default (props) => {
   const todoSchema = Yup.object({
     description: Yup.string().required("A descrição precisa ser informada!"),
   });
@@ -21,6 +21,7 @@ export default () => {
       axios.post(url, values).then((res) => {
         if (res.status === 201) {
           toast.success("TODO foi criado com sucesso!");
+          props.history.push("/home");
         }
       });
     },
