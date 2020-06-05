@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Container, Form, Row, Col, Button, InputGroup } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+
+const url = "https://node-todo-dev.herokuapp.com/api/todos";
 
 export default () => {
   const [description, setDescription] = useState("");
@@ -16,7 +19,9 @@ export default () => {
     },
     validationSchema: todoSchema,
     onSubmit: (values) => {
-      console.log(values);
+      axios.post(url, values).then((res) => {
+        console.log("Tudo certo!");
+      });
     },
   });
 
@@ -35,10 +40,11 @@ export default () => {
                   value={formik.values.description}
                   name="description"
                 />
+                <span>{formik.errors.description}</span>
               </Form.Group>
             </Col>
           </Row>
-          <Button onClick={formik.onSubmit}>Create</Button>
+          <Button onClick={formik.handleSubmit}>Create</Button>
         </Form>
       </Container>
     </div>
