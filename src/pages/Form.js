@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Container, Form, Row, Col, Button, InputGroup } from "react-bootstrap";
+import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import axios from "axios";
 
 const url = "https://node-todo-dev.herokuapp.com/api/todos";
 
 export default () => {
-  const [description, setDescription] = useState("");
-
   const todoSchema = Yup.object({
     description: Yup.string().required("A descrição precisa ser informada!"),
   });
@@ -20,7 +19,9 @@ export default () => {
     validationSchema: todoSchema,
     onSubmit: (values) => {
       axios.post(url, values).then((res) => {
-        console.log("Tudo certo!");
+        if (res.status === 201) {
+          toast.success("TODO foi criado com sucesso!");
+        }
       });
     },
   });
