@@ -1,10 +1,11 @@
 import React from "react";
-import Boleto from "./components/BoletoHooks";
+import "bootstrap/dist/css/bootstrap.css";
+import Form from "./pages/Form";
 
 function App() {
   return (
     <div>
-      <Boleto />
+      <Form />
     </div>
   );
 }
