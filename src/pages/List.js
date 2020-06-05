@@ -5,7 +5,7 @@ import moment from "moment";
 
 const url = "https://node-todo-dev.herokuapp.com/api/todos";
 
-export default () => {
+export default (props) => {
   const [todos, setTodos] = useState([]);
   useEffect(() => {
     findTodos();
@@ -30,7 +30,17 @@ export default () => {
   return (
     <>
       <Container>
-        <h3>TODOs</h3>
+        <Row>
+          <h3>TODOs</h3>
+          <Button
+            onClick={() => {
+              props.history.push("/create");
+            }}
+            variant="primary"
+          >
+            Create
+          </Button>
+        </Row>
         <Table striped bordered hover size="sm">
           <thead>
             <tr>
