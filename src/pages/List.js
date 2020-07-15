@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Button, Table } from "react-bootstrap";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
-import moment from "moment";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Button, Table } from 'react-bootstrap';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+import moment from 'moment';
+import axios from 'axios';
 
-const url = "https://node-todo-dev.herokuapp.com/api/todos";
+const url = 'https://node-todo-dev.herokuapp.com/api/todos';
 
 export default (props) => {
   const [todos, setTodos] = useState([]);
@@ -20,18 +20,24 @@ export default (props) => {
     });
   }
 
-  function handleRemove() {
+  function handleRemove(id) {
+    console.log('Lista de TODOs', todos);
     MySwal.fire({
-      title: "Você tem certeza?",
-      text: "Uma vez deletado, você não poderá recuperar este TODO.",
-      type: "warning",
+      title: 'Você tem certeza?',
+      text: 'Uma vez deletado, você não poderá recuperar este TODO.',
+      type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#d9534f",
-      confirmButtonText: "Sim",
-      cancelButtonText: "Não",
+      confirmButtonColor: '#d9534f',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
     }).then((isConfirmed) => {
       if (isConfirmed.value) {
-        // axios.delete(`${url}/${id}`).then((res) => {});
+        axios.delete(`${url}/${id}`).then((res) => {
+          const lista = todos.filter((todo) => {
+            return todo._id !== id;
+          });
+          setTodos(lista);
+        });
       }
     });
   }
@@ -40,11 +46,19 @@ export default (props) => {
     return todos.map((todo) => (
       <tr>
         <td>{todo.description}</td>
-        <td>{moment(todo.createdAt).format("DD/MM/YYYY")}</td>
-        <td>{todo.done ? "Sim" : "Não"}</td>
+        <td>{moment(todo.createdAt).format('DD/MM/YYYY')}</td>
+        <td>{todo.done ? 'Sim' : 'Não'}</td>
         <td>
-          <Button variant="danger" onClick={handleRemove}>
+          <Button variant="danger" onClick={() => handleRemove(todo._id)}>
             Remover
+          </Button>
+          <Button
+            variant="outline-success"
+            onClick={() => {
+              props.history.push(`/edit/${todo._id}`);
+            }}
+          >
+            Editar
           </Button>
         </td>
       </tr>
@@ -58,7 +72,7 @@ export default (props) => {
           <h3>TODOs</h3>
           <Button
             onClick={() => {
-              props.history.push("/create");
+              props.history.push('/create');
             }}
             variant="primary"
           >
