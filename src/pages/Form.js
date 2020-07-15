@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { Container, Form, Row, Col, Button } from "react-bootstrap";
-import { useFormik } from "formik";
-import { toast } from "react-toastify";
-import * as Yup from "yup";
-import axios from "axios";
+import React from 'react';
+import { Container, Form, Row, Col, Button } from 'react-bootstrap';
+import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
+import * as Yup from 'yup';
+import axios from 'axios';
 
-const url = "https://node-todo-dev.herokuapp.com/api/todos";
+const url = 'https://node-todo-dev.herokuapp.com/api/todos';
 
 export default (props) => {
   const todoSchema = Yup.object({
-    description: Yup.string().required("A descrição precisa ser informada!"),
+    description: Yup.string().required('A descrição precisa ser informada!'),
   });
 
   const formik = useFormik({
     initialValues: {
-      description: "",
+      description: '',
     },
     validationSchema: todoSchema,
     onSubmit: (values) => {
       axios.post(url, values).then((res) => {
         if (res.status === 201) {
-          toast.success("TODO foi criado com sucesso!");
-          props.history.push("/home");
+          toast.success('TODO foi criado com sucesso!');
+          props.history.push('/home');
         }
       });
     },

@@ -1,8 +1,8 @@
-import React from "react";
-import { BrowserRouter, Route, Redirect, Switch, useParams } from "react-router-dom";
-import List from "../pages/List";
-import Form from "../pages/Form";
-import Edit from "../pages/Edit";
+import React from 'react';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import List from '../pages/List';
+import Form from '../pages/Form';
+import Edit from '../pages/Edit';
 
 export default () => {
   return (
