@@ -34,7 +34,7 @@ export default (props) => {
     axios.get(url + `/${params.id}`).then((res) => {
       formik.setFieldValue('description', res.data.description);
     });
-  }, [formik]);
+  }, [formik, params]);
 
   return (
     <div>
